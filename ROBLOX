@@ -1,0 +1,23 @@
+-- LocalScript to remove all accessories from the player's character
+
+local player = game.Players.LocalPlayer
+
+local function removeAccessories(character)
+    for _, item in pairs(character:GetChildren()) do
+        if item:IsA("Accessory") then
+            item:Destroy()
+        end
+    end
+end
+
+player.CharacterAdded:Connect(function(character)
+    -- Give the character some time to fully load
+    character:WaitForChild("Humanoid")
+    -- Call the function to remove accessories
+    removeAccessories(character)
+end)
+
+-- If the character is already loaded, remove accessories immediately
+if player.Character then
+    removeAccessories(player.Character)
+end
